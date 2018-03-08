@@ -10,22 +10,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>中大眼科</title>
+<title>sle</title>
 </head>
 <body>
-	name:<input type="text" id="userName" value="zhao"/>
-	<br/>
-	pwd:<input type="text" id="passWord" value="shuxue"/>
-	<br/>
-	<button onclick="login()">登录</button>
-	
-	
+    <form action="<%=basePath%>login">
+		name:<input type="text" id="userName" value="1"/>
+		<br/>
+		pwd:<input type="text" id="passWord" value="1"/>
+		<br/>
+		<button onclick="login()">登录</button>
+	</form>
 	
 	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		function login(){
-			var name = $("#userName").val();
-			var pwd = $("#passWord").val();
+			<%-- var name = $("#1").val();
+			var pwd = $("#1").val();
 			if(name === '' || pwd === ''){
 				return;
 			}
@@ -42,7 +42,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							alert("登录失败");
 						}
 					}
-			);
+			); --%>
+			document.form.submit();
 			
 		}		
 	

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Welcome to use the TableGo Tools.
+    
+    http://vipbooks.iteye.com
+    http://blog.csdn.net/vipbooks
+    http://www.cnblogs.com/vipbooks
+    
+    Author:bianj
+    Email:edinsker@163.com
+    Version:5.8.0
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- T_S_ROLE -->
+<mapper namespace="com.qmh.web.entity.sRole">
+    <!-- 结果映射 -->
+    <resultMap id="sRoleMap" type="com.qmh.web.entity.SRole">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="ROLECODE" property="rolecode" jdbcType="VARCHAR" />
+        <result column="ROLENAME" property="rolename" jdbcType="VARCHAR" />
+        <result column="UPDATE_NAME" property="updateName" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+        <result column="CREATE_NAME" property="createName" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- 表所有字段 -->
+    <sql id="allColumns">
+        ID, ROLECODE, ROLENAME, UPDATE_NAME, UPDATE_DATE, UPDATE_BY, 
+        CREATE_NAME, CREATE_DATE, CREATE_BY
+    </sql>
+    
+    <!-- 查询所有数据 -->
+    <select id="findSRoleAll" resultMap="sRoleMap">
+        SELECT
+        <include refid="allColumns" />
+        FROM T_S_ROLE
+    </select>
+    
+    <!-- 根据条件查询数据 -->
+    <select id="findSRoleByCondition" resultMap="sRoleMap" parameterType="map">
+        SELECT
+        <include refid="allColumns" />
+        FROM T_S_ROLE WHERE 1 = 1
+        <if test="rolecode != null and rolecode != ''">
+            AND ROLECODE LIKE CONCAT('%',#{rolecode},'%')
+        </if>
+        <if test="rolename != null and rolename != ''">
+            AND ROLENAME LIKE CONCAT('%',#{rolename},'%')
+        </if>
+        <if test="updateName != null and updateName != ''">
+            AND UPDATE_NAME LIKE CONCAT('%',#{updateName},'%')
+        </if>
+        <if test="updateDate != null">
+            AND UPDATE_DATE = #{updateDate}
+        </if>
+        <if test="updateBy != null and updateBy != ''">
+            AND UPDATE_BY LIKE CONCAT('%',#{updateBy},'%')
+        </if>
+        <if test="createName != null and createName != ''">
+            AND CREATE_NAME LIKE CONCAT('%',#{createName},'%')
+        </if>
+        <if test="createDate != null">
+            AND CREATE_DATE = #{createDate}
+        </if>
+        <if test="createBy != null and createBy != ''">
+            AND CREATE_BY LIKE CONCAT('%',#{createBy},'%')
+        </if>
+    </select>
+    
+    <!-- 根据主键查询数据 -->
+    <select id="findSRoleByIds" resultMap="sRoleMap" parameterType="list">
+        SELECT
+        <include refid="allColumns" />
+        FROM T_S_ROLE WHERE ID IN
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    
+    <!-- 插入数据 -->
+    <insert id="insertSRole" parameterType="map">
+        INSERT INTO T_S_ROLE (<include refid="allColumns" />)
+        VALUES (
+            #{id},
+            #{rolecode},
+            #{rolename},
+            #{updateName},
+            #{updateDate},
+            #{updateBy},
+            #{createName},
+            #{createDate},
+            #{createBy}
+        )
+    </insert>
+    
+    <!-- 批量插入数据 -->
+    <insert id="insertSRoles" parameterType="list">
+        INSERT INTO T_S_ROLE (<include refid="allColumns" />)
+        VALUES (
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.id},
+                #{item.rolecode},
+                #{item.rolename},
+                #{item.updateName},
+                #{item.updateDate},
+                #{item.updateBy},
+                #{item.createName},
+                #{item.createDate},
+                #{item.createBy}
+            )
+        </foreach>
+    </insert>
+    
+    <!-- 修改数据 -->
+    <update id="updateSRole" parameterType="map">
+        UPDATE T_S_ROLE SET
+            ROLECODE = #{rolecode},
+            ROLENAME = #{rolename},
+            UPDATE_NAME = #{updateName},
+            UPDATE_DATE = #{updateDate},
+            UPDATE_BY = #{updateBy},
+            CREATE_NAME = #{createName},
+            CREATE_DATE = #{createDate},
+            CREATE_BY = #{createBy}
+        WHERE ID = #{id}
+    </update>
+    
+    <!-- 批量修改数据 -->
+    <update id="updateSRoles" parameterType="list">
+        <foreach collection="list" index="index" item="item" separator=";">
+            UPDATE T_S_ROLE SET
+                ROLECODE = #{item.rolecode},
+                ROLENAME = #{item.rolename},
+                UPDATE_NAME = #{item.updateName},
+                UPDATE_DATE = #{item.updateDate},
+                UPDATE_BY = #{item.updateBy},
+                CREATE_NAME = #{item.createName},
+                CREATE_DATE = #{item.createDate},
+                CREATE_BY = #{item.createBy}
+            WHERE ID = #{item.id}
+        </foreach>
+    </update>
+    
+    <!-- 根据主键删除数据 -->
+    <delete id="deleteSRoleById" parameterType="string">
+        DELETE FROM T_S_ROLE WHERE ID = #{id}
+    </delete>
+    
+    <!-- 根据主键批量删除数据 -->
+    <delete id="deleteSRoleByIds" parameterType="list">
+        DELETE FROM T_S_ROLE WHERE ID IN
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

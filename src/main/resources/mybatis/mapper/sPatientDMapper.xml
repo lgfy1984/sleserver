@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Welcome to use the TableGo Tools.
+    
+    http://vipbooks.iteye.com
+    http://blog.csdn.net/vipbooks
+    http://www.cnblogs.com/vipbooks
+    
+    Author:bianj
+    Email:edinsker@163.com
+    Version:5.8.0
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- T_S_PATIENT_D -->
+<mapper namespace="com.qmh.web.dao.SPatientDMapper">
+    <!-- 结果映射 -->
+    <resultMap id="sPatientDMap" type="com.qmh.web.entity.SPatientD">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="STPTID" property="stptid" jdbcType="VARCHAR" />
+        <result column="SEIZURE" property="seizure" jdbcType="VARCHAR" />
+        <result column="PSYCHOSIS" property="psychosis" jdbcType="VARCHAR" />
+        <result column="ORGANIC_BRAIN_SYNDROME" property="organicBrainSyndrome" jdbcType="VARCHAR" />
+        <result column="VISUAL_DISTURBANCE" property="visualDisturbance" jdbcType="VARCHAR" />
+        <result column="CRANIAL_NERVE_DISORDER" property="cranialNerveDisorder" jdbcType="VARCHAR" />
+        <result column="LUPUS_HEADACHE" property="lupusHeadache" jdbcType="VARCHAR" />
+        <result column="CVA" property="cva" jdbcType="VARCHAR" />
+        <result column="FEVER" property="fever" jdbcType="VARCHAR" />
+        <result column="RASH" property="rash" jdbcType="VARCHAR" />
+        <result column="ALOPECIA" property="alopecia" jdbcType="VARCHAR" />
+        <result column="MUCOSAL_ULCERS" property="mucosalUlcers" jdbcType="VARCHAR" />
+        <result column="ARTHRITIS" property="arthritis" jdbcType="VARCHAR" />
+        <result column="MYOSITIS" property="myositis" jdbcType="VARCHAR" />
+        <result column="VASCULITIS" property="vasculitis" jdbcType="VARCHAR" />
+        <result column="PLEURISY" property="pleurisy" jdbcType="VARCHAR" />
+        <result column="PERICARDITIS" property="pericarditis" jdbcType="VARCHAR" />
+        <result column="CBP" property="cbp" jdbcType="TIMESTAMP" />
+        <result column="HB" property="hb" jdbcType="VARCHAR" />
+        <result column="WBC" property="wbc" jdbcType="VARCHAR" />
+        <result column="PLT" property="plt" jdbcType="VARCHAR" />
+        <result column="ANTI_DS_DNA_AB" property="antiDsDnaAb" jdbcType="TIMESTAMP" />
+        <result column="ANTI_DS_DNA_AB_VALUE" property="antiDsDnaAbValue" jdbcType="VARCHAR" />
+        <result column="COMPLEMENT" property="complement" jdbcType="TIMESTAMP" />
+        <result column="C3" property="c3" jdbcType="VARCHAR" />
+        <result column="C4" property="c4" jdbcType="VARCHAR" />
+        <result column="URINE_MICROSCOPY" property="urineMicroscopy" jdbcType="TIMESTAMP" />
+        <result column="CAST" property="cast" jdbcType="VARCHAR" />
+        <result column="HEMATURIA" property="hematuria" jdbcType="VARCHAR" />
+        <result column="PYURIA" property="pyuria" jdbcType="VARCHAR" />
+        <result column="PROTEINURIA" property="proteinuria" jdbcType="VARCHAR" />
+        <result column="SCORE" property="score" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+        <result column="CREATE_NAME" property="createName" jdbcType="VARCHAR" />
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+        <result column="UPDATE_NAME" property="updateName" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- 表所有字段 -->
+    <sql id="allColumns">
+        ID, STPTID, SEIZURE, PSYCHOSIS, ORGANIC_BRAIN_SYNDROME, VISUAL_DISTURBANCE, 
+        CRANIAL_NERVE_DISORDER, LUPUS_HEADACHE, CVA, FEVER, RASH, ALOPECIA, 
+        MUCOSAL_ULCERS, ARTHRITIS, MYOSITIS, VASCULITIS, PLEURISY, PERICARDITIS, 
+        CBP, HB, WBC, PLT, ANTI_DS_DNA_AB, ANTI_DS_DNA_AB_VALUE, 
+        COMPLEMENT, C3, C4, URINE_MICROSCOPY, CAST, HEMATURIA, 
+        PYURIA, PROTEINURIA, SCORE, CREATE_DATE, CREATE_BY, CREATE_NAME, 
+        UPDATE_DATE, UPDATE_BY, UPDATE_NAME
+    </sql>
+    
+    <!-- 查询所有数据 -->
+    <select id="findSPatientDAll" resultMap="sPatientDMap">
+        SELECT
+        <include refid="allColumns" />
+        FROM T_S_PATIENT_D
+    </select>
+    
+    <!-- 根据条件查询数据 -->
+    <select id="findSPatientDByCondition" resultMap="sPatientDMap" parameterType="map">
+        SELECT
+        <include refid="allColumns" />
+        FROM T_S_PATIENT_D WHERE 1 = 1
+        <if test="stptid != null and stptid != ''">
+            AND STPTID = #{stptid} 
+        </if>
+        <if test="order == 0 ">
+            ORDER BY CREATE_DATE DESC
+        </if>
+        <if test="order == 1 ">
+            ORDER BY CREATE_DATE ASC
+        </if>
+    </select>
+    
+    <!-- 根据主键查询数据 -->
+    <select id="findSPatientDByIds" resultMap="sPatientDMap" parameterType="list">
+        SELECT
+        <include refid="allColumns" />
+        FROM T_S_PATIENT_D WHERE ID IN
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    
+    <!-- 插入数据 -->
+    <insert id="insertSPatientD" parameterType="com.qmh.web.entity.SPatientD">
+        <selectKey keyProperty="id" resultType="java.lang.String"  order="BEFORE">
+		  select replace(uuid(),'-','') from dual
+		</selectKey>
+        INSERT INTO T_S_PATIENT_D (<include refid="allColumns" />)
+        VALUES (
+            #{id},
+            #{stptid},
+            #{seizure},
+            #{psychosis},
+            #{organicBrainSyndrome},
+            #{visualDisturbance},
+            #{cranialNerveDisorder},
+            #{lupusHeadache},
+            #{cva},
+            #{fever},
+            #{rash},
+            #{alopecia},
+            #{mucosalUlcers},
+            #{arthritis},
+            #{myositis},
+            #{vasculitis},
+            #{pleurisy},
+            #{pericarditis},
+            #{cbp},
+            #{hb},
+            #{wbc},
+            #{plt},
+            #{antiDsDnaAb},
+            #{antiDsDnaAbValue},
+            #{complement},
+            #{c3},
+            #{c4},
+            #{urineMicroscopy},
+            #{cast},
+            #{hematuria},
+            #{pyuria},
+            #{proteinuria},
+            #{score},
+            #{createDate},
+            #{createBy},
+            #{createName},
+            #{updateDate},
+            #{updateBy},
+            #{updateName}
+        )
+    </insert>
+    
+    <!-- 批量插入数据 -->
+    <insert id="insertSPatientDs" parameterType="list">
+        INSERT INTO T_S_PATIENT_D (<include refid="allColumns" />)
+        VALUES (
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.id},
+                #{item.stptid},
+                #{item.seizure},
+                #{item.psychosis},
+                #{item.organicBrainSyndrome},
+                #{item.visualDisturbance},
+                #{item.cranialNerveDisorder},
+                #{item.lupusHeadache},
+                #{item.cva},
+                #{item.fever},
+                #{item.rash},
+                #{item.alopecia},
+                #{item.mucosalUlcers},
+                #{item.arthritis},
+                #{item.myositis},
+                #{item.vasculitis},
+                #{item.pleurisy},
+                #{item.pericarditis},
+                #{item.cbp},
+                #{item.hb},
+                #{item.wbc},
+                #{item.plt},
+                #{item.antiDsDnaAb},
+                #{item.antiDsDnaAbValue},
+                #{item.complement},
+                #{item.c3},
+                #{item.c4},
+                #{item.urineMicroscopy},
+                #{item.cast},
+                #{item.hematuria},
+                #{item.pyuria},
+                #{item.proteinuria},
+                #{item.score},
+                #{item.createDate},
+                #{item.createBy},
+                #{item.createName},
+                #{item.updateDate},
+                #{item.updateBy},
+                #{item.updateName}
+            )
+        </foreach>
+    </insert>
+    
+    <!-- 修改数据 -->
+    <update id="updateSPatientD" parameterType="com.qmh.web.entity.SPatientD">
+        UPDATE T_S_PATIENT_D SET
+            STPTID = #{stptid},
+            SEIZURE = #{seizure},
+            PSYCHOSIS = #{psychosis},
+            ORGANIC_BRAIN_SYNDROME = #{organicBrainSyndrome},
+            VISUAL_DISTURBANCE = #{visualDisturbance},
+            CRANIAL_NERVE_DISORDER = #{cranialNerveDisorder},
+            LUPUS_HEADACHE = #{lupusHeadache},
+            CVA = #{cva},
+            FEVER = #{fever},
+            RASH = #{rash},
+            ALOPECIA = #{alopecia},
+            MUCOSAL_ULCERS = #{mucosalUlcers},
+            ARTHRITIS = #{arthritis},
+            MYOSITIS = #{myositis},
+            VASCULITIS = #{vasculitis},
+            PLEURISY = #{pleurisy},
+            PERICARDITIS = #{pericarditis},
+            CBP = #{cbp},
+            HB = #{hb},
+            WBC = #{wbc},
+            PLT = #{plt},
+            ANTI_DS_DNA_AB = #{antiDsDnaAb},
+            ANTI_DS_DNA_AB_VALUE = #{antiDsDnaAbValue},
+            COMPLEMENT = #{complement},
+            C3 = #{c3},
+            C4 = #{c4},
+            URINE_MICROSCOPY = #{urineMicroscopy},
+            CAST = #{cast},
+            HEMATURIA = #{hematuria},
+            PYURIA = #{pyuria},
+            PROTEINURIA = #{proteinuria},
+            SCORE = #{score},
+            CREATE_DATE = #{createDate},
+            CREATE_BY = #{createBy},
+            CREATE_NAME = #{createName},
+            UPDATE_DATE = #{updateDate},
+            UPDATE_BY = #{updateBy},
+            UPDATE_NAME = #{updateName}
+        WHERE ID = #{id}
+    </update>
+    
+    <!-- 批量修改数据 -->
+    <update id="updateSPatientDs" parameterType="list">
+        <foreach collection="list" index="index" item="item" separator=";">
+            UPDATE T_S_PATIENT_D SET
+                STPTID = #{item.stptid},
+                SEIZURE = #{item.seizure},
+                PSYCHOSIS = #{item.psychosis},
+                ORGANIC_BRAIN_SYNDROME = #{item.organicBrainSyndrome},
+                VISUAL_DISTURBANCE = #{item.visualDisturbance},
+                CRANIAL_NERVE_DISORDER = #{item.cranialNerveDisorder},
+                LUPUS_HEADACHE = #{item.lupusHeadache},
+                CVA = #{item.cva},
+                FEVER = #{item.fever},
+                RASH = #{item.rash},
+                ALOPECIA = #{item.alopecia},
+                MUCOSAL_ULCERS = #{item.mucosalUlcers},
+                ARTHRITIS = #{item.arthritis},
+                MYOSITIS = #{item.myositis},
+                VASCULITIS = #{item.vasculitis},
+                PLEURISY = #{item.pleurisy},
+                PERICARDITIS = #{item.pericarditis},
+                CBP = #{item.cbp},
+                HB = #{item.hb},
+                WBC = #{item.wbc},
+                PLT = #{item.plt},
+                ANTI_DS_DNA_AB = #{item.antiDsDnaAb},
+                ANTI_DS_DNA_AB_VALUE = #{item.antiDsDnaAbValue},
+                COMPLEMENT = #{item.complement},
+                C3 = #{item.c3},
+                C4 = #{item.c4},
+                URINE_MICROSCOPY = #{item.urineMicroscopy},
+                CAST = #{item.cast},
+                HEMATURIA = #{item.hematuria},
+                PYURIA = #{item.pyuria},
+                PROTEINURIA = #{item.proteinuria},
+                SCORE = #{item.score},
+                CREATE_DATE = #{item.createDate},
+                CREATE_BY = #{item.createBy},
+                CREATE_NAME = #{item.createName},
+                UPDATE_DATE = #{item.updateDate},
+                UPDATE_BY = #{item.updateBy},
+                UPDATE_NAME = #{item.updateName}
+            WHERE ID = #{item.id}
+        </foreach>
+    </update>
+    
+    <!-- 根据主键删除数据 -->
+    <delete id="deleteSPatientDById" parameterType="string">
+        DELETE FROM T_S_PATIENT_D WHERE ID = #{id}
+    </delete>
+    
+    <!-- 根据主键批量删除数据 -->
+    <delete id="deleteSPatientDByIds" parameterType="list">
+        DELETE FROM T_S_PATIENT_D WHERE ID IN
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Welcome to use the TableGo Tools.
+    
+    http://vipbooks.iteye.com
+    http://blog.csdn.net/vipbooks
+    http://www.cnblogs.com/vipbooks
+    
+    Author:bianj
+    Email:edinsker@163.com
+    Version:5.8.0
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- InnoDB free(T_S_USER) -->
+<mapper namespace="com.qmh.web.dao.SUserMapper">
+    <!-- 结果映射 -->
+    <resultMap id="sUserMap" type="com.qmh.web.entity.SUser">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+        <result column="REALNAME" property="realname" jdbcType="VARCHAR" />
+        <result column="SIGNATURE" property="signature"  jdbcType="BLOB" />
+        <result column="STATUS" property="status" jdbcType="INTEGER" />
+        <result column="USERKEY" property="userkey" jdbcType="VARCHAR" />
+        <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+        <result column="DEPARTID" property="departid" jdbcType="VARCHAR" />
+        <result column="DELETE_FLAG" property="deleteFlag" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- 表所有字段 -->
+    <sql id="allColumns">
+        ID, PASSWORD, REALNAME, SIGNATURE, STATUS, USERKEY, 
+        USERNAME, DEPARTID, DELETE_FLAG
+    </sql>
+    
+    <!-- 查询所有数据 -->
+    <select id="findSUserAll" resultMap="sUserMap">
+        SELECT
+        <include refid="allColumns" />
+        FROM T_S_USER
+    </select>
+    
+    <!-- 根据条件查询数据 -->
+    <select id="findSUserByCondition" resultMap="sUserMap" parameterType="map">
+        SELECT
+        <include refid="allColumns" />
+        FROM T_S_USER WHERE 1 = 1
+        <if test="id != null  and  id != '' ">
+            AND ID = #{id}
+        </if>
+        <if test="password != null and password != ''">
+            AND PASSWORD = #{password}
+        </if>
+        <if test="realname != null and realname != ''">
+            AND REALNAME LIKE CONCAT('%',#{realname},'%')
+        </if>
+        <if test="status != null and status != '' ">
+            AND STATUS = #{status}
+        </if>
+        <if test="userkey != null and userkey != ''">
+            AND USERKEY LIKE CONCAT('%',#{userkey},'%')
+        </if>
+        <if test="username != null and username != ''">
+            AND USERNAME  = #{username} 
+        </if>
+        <if test="departid != null and departid != ''">
+            AND DEPARTID LIKE CONCAT('%',#{departid},'%')
+        </if>
+    </select>
+    
+    <!-- 根据主键查询数据 -->
+    <select id="findSUserByIds" resultMap="sUserMap" parameterType="list">
+        SELECT
+        <include refid="allColumns" />
+        FROM T_S_USER WHERE ID IN
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    
+    <!-- 插入数据 -->
+    <insert id="insertSUser" parameterType="map">
+        INSERT INTO T_S_USER (<include refid="allColumns" />)
+        VALUES (
+            #{id},
+            #{password},
+            #{realname},
+            #{signature},
+            #{status},
+            #{userkey},
+            #{username},
+            #{departid},
+            #{deleteFlag}
+        )
+    </insert>
+    
+    <!-- 批量插入数据 -->
+    <insert id="insertSUsers" parameterType="list">
+        INSERT INTO T_S_USER (<include refid="allColumns" />)
+        VALUES (
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.id},
+                #{item.password},
+                #{item.realname},
+                #{item.signature},
+                #{item.status},
+                #{item.userkey},
+                #{item.username},
+                #{item.departid},
+                #{item.deleteFlag}
+            )
+        </foreach>
+    </insert>
+    
+    <!-- 修改数据 -->
+    <update id="updateSUser" parameterType="map">
+        UPDATE T_S_USER 
+           <trim prefix="SET" suffixOverrides="," suffix=" WHERE ID =#{id}">
+			    <if test="password != null and password != ''">PASSWORD=#{password},</if>
+		        <if test="username != null and username != ''">USERNAME=#{username},</if>
+			</trim>
+    </update>
+    
+    <!-- 批量修改数据 -->
+    <update id="updateSUsers" parameterType="list">
+        <foreach collection="list" index="index" item="item" separator=";">
+            UPDATE T_S_USER SET
+                PASSWORD = #{item.password},
+                REALNAME = #{item.realname},
+                SIGNATURE = #{item.signature},
+                STATUS = #{item.status},
+                USERKEY = #{item.userkey},
+                USERNAME = #{item.username},
+                DEPARTID = #{item.departid},
+                DELETE_FLAG = #{item.deleteFlag}
+            WHERE ID = #{item.id}
+        </foreach>
+    </update>
+    
+    <!-- 根据主键删除数据 -->
+    <delete id="deleteSUserById" parameterType="string">
+        DELETE FROM T_S_USER WHERE ID = #{id}
+    </delete>
+    
+    <!-- 根据主键批量删除数据 -->
+    <delete id="deleteSUserByIds" parameterType="list">
+        DELETE FROM T_S_USER WHERE ID IN
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,7 +1,7 @@
+
+http://localhost:8080/sleserver/user/getUserList
+
 # 搭建ssm框架
-
-> 记录一步步的过程
-
 ## 一、编写pom.xml文件
 
 声明

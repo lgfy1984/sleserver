@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.weshop.dao.UserDao" >
 
-  <select id="selectByPrimaryKey" resultType="com.zsx.web.entity.User" >
+  <select id="selectByPrimaryKey" resultType="com.qmh.web.entity.User" >
     select `id` ,`name` ,`pwd` from user where  `id` = #{id}
   </select>
   
-  <select id="selectAll" resultType="com.zsx.web.entity.User">
+  <select id="selectAll" resultType="com.qmh.web.entity.User">
     select `id` ,`name` ,`pwd` from user
   </select>
   
-  <insert id="insert" parameterType="com.zsx.web.entity.User" useGeneratedKeys="true" >
+  <insert id="insert" parameterType="com.qmh.web.entity.User" useGeneratedKeys="true" >
     insert into user (`id` ,`name` ,`pwd` ) values (#{id},#{name},#{pwd})
   </insert>
   
@@ -18,7 +18,7 @@
     delete from user where  `id` = #{id}
   </delete>
   
-  <!-- <update id="updateByPrimaryKey" parameterType="com.zsx.web.domain.User" >
+  <!-- <update id="updateByPrimaryKey" parameterType="com.qmh.web.domain.User" >
     update user set `name` = #{name},`pwd` = #{pwd},`id` = #{id},`name` = #{name},`pwd` = #{pwd} where  `id` = #{id}
   </update> -->
   

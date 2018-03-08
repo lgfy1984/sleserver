@@ -10,7 +10,7 @@ String userName = (session.getAttribute("userName") == null) ? "" : session.getA
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>中大眼科</title>
+<title>sle</title>
 </head>
 <body>
 <h2>Hello World!</h2>
