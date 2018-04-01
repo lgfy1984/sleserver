@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -77,8 +78,13 @@ public class UserController {
 		SUser suser = userService.searchById(username,password);
 		
 		response.setContentType("application/json;charset=utf-8");
+		if(suser==null){
+			response.setStatus(401);
+		}
 		PrintWriter out = response.getWriter();
-		out.println(JSON.toJSONString(suser));
+		if(suser!=null){
+		  out.println(JSON.toJSONString(suser));
+		}
 		out.flush();
 		out.close();
 	}
@@ -101,6 +107,8 @@ public class UserController {
 		if(suser!=null){
 			suser.setPassword(pwdnew);
 			temp = userService.updateSUser(uid, pwdnew);
+		}else{
+			temp=2;
 		}
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();

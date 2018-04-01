@@ -177,34 +177,48 @@ public class PasswordUtil {
 	}
 
 	public static void main(String[] args) {
-		int i=10;
-		for (int j = 0; j < i; j++) {
-			if((j)%3==0)
-			{
-				System.out.print("<br>");
-			}
-			else {
-				System.out.print(j);
-			}
-		}
-		System.out.print(-1%2==0);
+//		int i=10;
+//		for (int j = 0; j < i; j++) {
+//			if((j)%3==0)
+//			{
+//				System.out.print("<br>");
+//			}
+//			else {
+//				System.out.print(j);
+//			}
+//		}
+//		System.out.print(-1%2==0);
 		String str = "root";
 		String password = "root";
 
-		com.qmh.util.LogUtil.info("明文:" + str);
-		com.qmh.util.LogUtil.info("密码:" + password);
+//		com.qmh.util.LogUtil.info("明文:" + str);
+//		com.qmh.util.LogUtil.info("密码:" + password);
 
 		try {
-			byte[] salt = PasswordUtil.getStaticSalt();
-			String ciphertext = PasswordUtil.encrypt(str, password, salt);
-			com.qmh.util.LogUtil.info("密文:" + ciphertext);
-			String plaintext = PasswordUtil.decrypt(ciphertext, password, salt);
-			com.qmh.util.LogUtil.info("明文:" + plaintext);
-			
-			String result = PasswordUtil.decrypt("ea3d519525358e00", "root", salt);
-			com.qmh.util.LogUtil.info("明文:" + result);
+//			byte[] salt = PasswordUtil.getStaticSalt();
+//			String ciphertext = PasswordUtil.encrypt(str, password, salt);
+//			com.qmh.util.LogUtil.info("密文:" + ciphertext);
+//			String plaintext = PasswordUtil.decrypt(ciphertext, password, salt);
+//			com.qmh.util.LogUtil.info("明文:" + plaintext);
+//			
+//			String result = PasswordUtil.decrypt("ea3d519525358e00", "root", salt);
+//			com.qmh.util.LogUtil.info("明文:" + result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		byte[] salt = PasswordUtil.getStaticSalt();
+		String[] struqm = new String[]{"qm1","qm2","qm3","qm4","qm5","qm6","qm7","qm8","qm9","qm10"};
+		String[] strupy = new String[]{"py1","py2","py3","py4","py5","py6","py7","py8","py9","py10"};
+		String[] strupw = new String[]{"pw1","pw2","pw3","pw4","pw5","pw6","pw7","pw8","pw9","pw10"};
+		String[] struqe = new String[]{"qe1","qe2","qe3","qe4","qe5","qe6","qe7","qe8","qe9","qe10"};
+		String[] struuc = new String[]{"uc1","uc2","uc3","uc4","uc5","uc6","uc7","uc8","uc9","uc10"};
+		String[] strutk = new String[]{"tk1","tk2","tk3","tk4","tk5","tk6","tk7","tk8","tk9","tk10"};
+		String[] struma = new String[]{"ma1","ma2","ma3","ma4","ma5","ma6","ma7","ma8","ma9","ma10"};
+		for(int i=0;i<10;i++){
+
+			String ciphertext = PasswordUtil.encrypt(struma[i], "ma", salt);
+			System.out.println(ciphertext);
+		}
+		
 	}
 }
